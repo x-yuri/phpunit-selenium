@@ -56,10 +56,12 @@
 class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated
     implements PHPUnit_Extensions_Selenium2TestCase_SessionStrategy
 {
+    var $failed;
+
     public function session(array $parameters)
     {
         $seleniumServerUrl = PHPUnit_Extensions_Selenium2TestCase_URL::fromHostAndPort($parameters['host'], $parameters['port']);
-        $driver = new PHPUnit_Extensions_Selenium2TestCase_Driver($seleniumServerUrl, $parameters['seleniumServerRequestsTimeout']);
+        $driver = new PHPUnit_Extensions_Selenium2TestCase_Driver($this, $seleniumServerUrl, $parameters['seleniumServerRequestsTimeout']);
         $capabilities = array_merge($parameters['desiredCapabilities'],
                                     array(
                                         'browserName' => $parameters['browserName']
@@ -70,11 +72,12 @@ class PHPUnit_Extensions_Selenium2TestCase_SessionStrategy_Isolated
 
     public function notSuccessfulTest()
     {
+        $this->failed = TRUE;
     }
 
     public function endOfTest(PHPUnit_Extensions_Selenium2TestCase_Session $session = NULL)
     {
-        if ($session !== NULL) {
+        if ($session !== NULL && ( ! $this->failed || ! getenv('LEAVE_BROWSER_OPEN_ON_FAILURE'))) {
             $session->stop();
         }
     }

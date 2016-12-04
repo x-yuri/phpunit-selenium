@@ -100,6 +100,7 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
     {
         $this->baseUrl = $baseUrl;
         $this->timeouts = $timeouts;
+        $this->sessionStrategy = $driver->sessionStrategy;
         parent::__construct($driver, $url);
     }
 
@@ -170,7 +171,8 @@ class PHPUnit_Extensions_Selenium2TestCase_Session
 
     public function __destruct()
     {
-        $this->stop();
+        if ( ! $this->sessionStrategy->failed || ! getenv('LEAVE_BROWSER_OPEN_ON_FAILURE'))
+            $this->stop();
     }
 
     /**

@@ -58,10 +58,11 @@ class PHPUnit_Extensions_Selenium2TestCase_Driver
     private $seleniumServerUrl;
     private $seleniumServerRequestsTimeout;
 
-    public function __construct(PHPUnit_Extensions_Selenium2TestCase_URL $seleniumServerUrl, $timeout = 60)
+    public function __construct($sessionStrategy, PHPUnit_Extensions_Selenium2TestCase_URL $seleniumServerUrl, $timeout = 60)
     {
         $this->seleniumServerUrl = $seleniumServerUrl;
         $this->seleniumServerRequestsTimeout = $timeout;
+        $this->sessionStrategy = $sessionStrategy;
     }
 
     public function startSession(array $desiredCapabilities, PHPUnit_Extensions_Selenium2TestCase_URL $browserUrl)

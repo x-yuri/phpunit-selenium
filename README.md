@@ -23,6 +23,11 @@ Please direct pull requests to [giorgiosironi/phpunit-selenium](https://github.c
 Running the test suite
 ---
 
+Usage
+---
+
+Run tests with `LEAVE_BROWSER_OPEN_ON_FAILURE=1` environment variable to, as the name says it, leave browser open on failure.
+
 #### Via Vagrant
 
 Just run the following Vagrant commands (a minimal version of `v1.7` is required) and everything will be set up for you. The first start will take some time which depends on the speed of your connection (and less - speed of your computer):
